@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Matching Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.954 0 0 8.954 0 20C0 31.046 8.954 40 20 40C31.046 40 40 31.046 40 20C40 8.954 31.046 0 20 0ZM20 7.5C24.142 7.5 27.5 10.858 27.5 15C27.5 19.142 24.142 22.5 20 22.5C15.858 22.5 12.5 19.142 12.5 15C12.5 10.858 15.858 7.5 20 7.5ZM20 35C15.833 35 12.083 33.333 9.5 30.583C9.583 25.292 14.708 21.25 20 21.25C25.292 21.25 30.417 25.292 30.5 30.583C27.917 33.333 24.167 35 20 35Z" fill="#4F46E5"/>
+                </svg>
+                <h1>CV Matcher</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Find Your Perfect Career Match with AI</h2>
+                    <p>Our advanced AI analyzes your CV against job descriptions to determine compatibility and highlight areas for improvement.</p>
+                </div>
+                <div class="hero-image">
+                    <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M200 50C144.772 50 100 94.772 100 150C100 205.228 144.772 250 200 250C255.228 250 300 205.228 300 150C300 94.772 255.228 50 200 50ZM200 70C244.183 70 280 105.817 280 150C280 194.183 244.183 230 200 230C155.817 230 120 194.183 120 150C120 105.817 155.817 70 200 70Z" fill="#E0E7FF"/>
+                        <path d="M200 90C166.863 90 140 116.863 140 150C140 183.137 166.863 210 200 210C233.137 210 260 183.137 260 150C260 116.863 233.137 90 200 90ZM200 110C222.091 110 240 127.909 240 150C240 172.091 222.091 190 200 190C177.909 190 160 172.091 160 150C160 127.909 177.909 110 200 110Z" fill="#C7D2FE"/>
+                        <path d="M200 130C188.954 130 180 138.954 180 150C180 161.046 188.954 170 200 170C211.046 170 220 161.046 220 150C220 138.954 211.046 130 200 130Z" fill="#4F46E5"/>
+                        <path d="M320 120L340 140L320 160" stroke="#4F46E5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M80 120L60 140L80 160" stroke="#4F46E5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M200 30V50" stroke="#4F46E5" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M200 250V270" stroke="#4F46E5" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="container">
+                <div class="form-header">
+                    <h3>Match Your Skills to the Right Job</h3>
+                    <p>Paste your CV and a job description below to get an AI-powered analysis of your compatibility.</p>
+                </div>
+                <form id="matching-form" action="https://b888ddf38e8d.ngrok-free.app/webhook/ff9f6961-3526-4ec9-8170-6a2a429c8029" method="POST">
+                    <div class="form-group">
+                        <label for="cv_text">Your CV Text</label>
+                        <textarea id="cv_text" name="cv_text" placeholder="Paste your CV or resume text here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_description">Job Description Text</label>
+                        <textarea id="job_description" name="job_description" placeholder="Paste the job description text here..."></textarea>
+                    </div>
+                    <button type="submit" class="analyze-btn">Analyze</button>
+                </form>
+                
+                <!-- Results Section (Initially Hidden) -->
+                <div id="results-section" class="results-section" style="display: none;">
+                    <div class="results-header">
+                        <h3>Analysis Results</h3>
+                    </div>
+                    <div class="loading-indicator" id="loading-indicator" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Analiz ediliyor...</p>
+                    </div>
+                    <div class="results-content" id="results-content">
+                        <div class="score-container">
+                            <div class="score-circle">
+                                <span id="compatibility-score">0</span><span>%</span>
+                            </div>
+                            <h4>Uygunluk Puanı</h4>
+                        </div>
+                        
+                        <div class="results-details">
+                            <div class="result-section">
+                                <h4>Nedenler</h4>
+                                <ul id="reasons-list"></ul>
+                            </div>
+                            
+                            <div class="result-section">
+                                <h4>CV Güçlü Yönleri</h4>
+                                <ul id="strengths-list"></ul>
+                            </div>
+                            
+                            <div class="result-section">
+                                <h4>İlanda Belirtilen Eksik Beceriler</h4>
+                                <ul id="missing-skills-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h3>Why Use AI Career Match?</h3>
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M35 5H5C3.895 5 3 5.895 3 7V33C3 34.105 3.895 35 5 35H35C36.105 35 37 34.105 37 33V7C37 5.895 36.105 5 35 5Z" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M13 15L19 21L13 27" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 27H27" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4>Smart Analysis</h4>
+                        <p>Our AI compares your skills and experience with job requirements to identify matches and gaps.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 37C29.389 37 37 29.389 37 20C37 10.611 29.389 3 20 3C10.611 3 3 10.611 3 20C3 29.389 10.611 37 20 37Z" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15 15C15 13.343 16.343 12 18 12H22C23.657 12 25 13.343 25 15C25 16.657 23.657 18 22 18H18C16.343 18 15 19.343 15 21C15 22.657 16.343 24 18 24H22C23.657 24 25 22.657 25 21" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20 8V12" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20 24V28" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4>Personalized Recommendations</h4>
+                        <p>Get tailored suggestions to improve your CV for specific job applications.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 11V20L26 26" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20 37C29.389 37 37 29.389 37 20C37 10.611 29.389 3 20 3C10.611 3 3 10.611 3 20C3 29.389 10.611 37 20 37Z" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4>Save Time</h4>
+                        <p>Quickly identify if a job is right for you before spending hours on applications.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 0C8.954 0 0 8.954 0 20C0 31.046 8.954 40 20 40C31.046 40 40 31.046 40 20C40 8.954 31.046 0 20 0ZM20 7.5C24.142 7.5 27.5 10.858 27.5 15C27.5 19.142 24.142 22.5 20 22.5C15.858 22.5 12.5 19.142 12.5 15C12.5 10.858 15.858 7.5 20 7.5ZM20 35C15.833 35 12.083 33.333 9.5 30.583C9.583 25.292 14.708 21.25 20 21.25C25.292 21.25 30.417 25.292 30.5 30.583C27.917 33.333 24.167 35 20 35Z" fill="#6366F1"/>
+                    </svg>
+                    <p>AI Career Match</p>
+                </div>
+                <p>&copy; 2023 AI Career Match. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
